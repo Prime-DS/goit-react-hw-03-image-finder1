@@ -13,29 +13,40 @@ export default class Searchbar extends Component {
         error: null,
         search:"",
       page: 1,
+      isVisible: false,
+      isEmpty:true,
       modalOpen: false,
       largeImageURL: "",
   }
 
   componentDidUpdate(_, prevState) {
     const { search, page } = this.state;
-    if ((search && prevState.search !== search) ||
-    page> prevState.page)
-    this.featchImage(search, page);
-  }
-async featchImage() {
-        const { search, page } = this.state;
+    // if ((search && prevState.search !== search) ||
+    //   page > prevState.page)
+    if (prevState.search !== search || prevState.page !== page) {
+        this.featchImage(search, page);
+      }
+  };
+
+  async featchImage() {
+  
+    const { items, search, page } = this.state;
+    if (!search) {
+      return;
+    }
         this.setState({
             loading:true,
         })
 
         try {
-            const data = await searchImages(search, page);
-          this.setState(({ items }) => { 
+          const data = await searchImages(search, page);
+
+          this.setState(prevState => {
             return {
-              items: [...items, ...data.hits],
+              items: [...prevState.items, ...data.hits],
+              isVisible: this.state.page < Math.ceil(data.total/12),
             }
-          });
+          })
 
         } catch (error) {
             this.setState({
@@ -51,7 +62,10 @@ async featchImage() {
 
    onSearch = ({ search }) => {
         this.setState({
-            search,
+          search: search,
+          page: 1,
+          items: [],
+          isEmpty: false,
         })
   }
 
@@ -65,27 +79,39 @@ async featchImage() {
   closeModal = () => {
     this.setState({
       modalOpen: false,
-      modalContent: {
-        title:"",
-      }
+      // modalContent: {
+      //   modalContent:"",
+      // }
   })
 }
 
+  
+  onLoadMore = () => {
+    this.setState(prevState => {
+      return {
+        page: prevState.page + 1
+      }
+    })
+  }
+
     render() {
-      const { items, loading, error,modalOpen,largeImageURL } = this.state;
+      const { items, loading, error,modalOpen,largeImageURL,isEmpty } = this.state;
       const { onSearch,closeModal,openModal } = this;
       const isImage = Boolean(items.length);
-        return (
+      return (
+        <>
             <div className={styles.Searchbar}>
-            {modalOpen && <Modal onClose={closeModal}>
-              <img src={largeImageURL.largeImageURL} alt="foto cat" ></img>
-              
-            </Modal>}
             <SearchForm onSubmit={onSearch} />
+          </div>
+          {isEmpty && <h2> They are no image...</h2> }
+          {modalOpen && <Modal onClose={closeModal}>
+              <img src={largeImageURL.largeImageURL} alt="foto cat" ></img>
+            </Modal>}
             {loading && <Loader />}
             {error && <p>Будь ласка спробуйте пізніе!</p>}
-            {isImage&& <ImageGallery items={items} onClick={openModal} />}
-            </div>
+          {isImage && <ImageGallery items={items} onClick={openModal} />}
+          {this.state.isVisible && <button onClick={this.onLoadMore}>Load more</button>}
+          </>
     )
   }
 }

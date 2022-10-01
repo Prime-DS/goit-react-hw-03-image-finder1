@@ -26,7 +26,7 @@ export default class Modal extends Component {
     return createPortal(
       <div className={styles.overlay} onClick={closeModal}>
         <div className={styles.modal}>
-            <span className={styles.close} onClick={closeModal}>X</span>
+            {/* <span className={styles.close} onClick={closeModal}></span> */}
             {children}
         </div>
       </div>,

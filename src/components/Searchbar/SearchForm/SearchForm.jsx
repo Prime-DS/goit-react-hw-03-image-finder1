@@ -3,6 +3,7 @@ import React, { Component } from 'react'
 import TextField from 'components/Searchbar/TextField/TextField';
 import SubmitButton from '../SubmitButton/SubmitButton';
 import { nanoid } from 'nanoid';
+import styles from "./searchForm.module.scss";
 export default class SearchForm extends Component {
     state = {
         search:"",
@@ -40,7 +41,7 @@ export default class SearchForm extends Component {
       const { search } = this.state;
       const { handleSubmit,searchId,handleChange,searchField} = this;
     return (
-      <form onSubmit={handleSubmit} >
+      <form onSubmit={handleSubmit} className={styles.SearchForm} >
         <SubmitButton
           text="Search"
           onClick={handleSubmit}

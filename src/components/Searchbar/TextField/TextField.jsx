@@ -8,7 +8,7 @@ const TextField = ({id, label, value, name, handleChange, type, className, place
     return (
         <div className={styles.formGroup}>
             {label && <label htmlFor={id}>{label}</label>}
-            <input id={id} value={value} name={name} onChange={handleChange} type={type} className={fullClassName} placeholder={placeholder} required={required} pattern={pattern} />
+            <input className={styles.SearchFormInput} id={id} value={value} name={name} onChange={handleChange} type={type}  placeholder={placeholder} required={required} pattern={pattern} />
         </div>
     )
 }

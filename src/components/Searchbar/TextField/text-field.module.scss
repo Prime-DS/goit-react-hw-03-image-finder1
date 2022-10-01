@@ -8,3 +8,18 @@
 .field {
     padding: 10px 15px;
 }
+.SearchFormInput {
+    display: inline-block;
+    width: 300px;
+    font: inherit;
+    font-size: 20px;
+    border: none;
+    outline: none;
+    padding-left: 18px;
+    padding-right: 4px;
+}
+
+.SearchFormInput::placeholder {
+    font: inherit;
+    font-size: 18px;
+}
