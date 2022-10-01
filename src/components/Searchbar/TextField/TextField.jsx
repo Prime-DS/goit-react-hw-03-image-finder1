@@ -3,7 +3,7 @@ import PropTypes from "prop-types";
 import styles from "./text-field.module.scss";
 
 const TextField = ({id, label, value, name, handleChange, type, className, placeholder, required, pattern}) => {
-    const fullClassName = className ? `${styles.field} ${className}` : styles.field;
+    // const fullClassName = className ? `${styles.field} ${className}` : styles.field;
 
     return (
         <div className={styles.formGroup}>

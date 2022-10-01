@@ -30,7 +30,7 @@ export default class Searchbar extends Component {
 
   async featchImage() {
   
-    const { items, search, page } = this.state;
+    const { search, page } = this.state;
     if (!search) {
       return;
     }
