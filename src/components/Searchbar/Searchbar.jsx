@@ -110,7 +110,7 @@ export default class Searchbar extends Component {
             {loading && <Loader />}
             {error && <p>Будь ласка спробуйте пізніе!</p>}
           {isImage && <ImageGallery items={items} onClick={openModal} />}
-          {this.state.isVisible && <button onClick={this.onLoadMore}>Load more</button>}
+          {this.state.isVisible && <button onClick={this.onLoadMore} className={styles.loadMore}>Load more</button>}
           </>
     )
   }
